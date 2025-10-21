@@ -1,0 +1,45 @@
+1. Objetivo
+Este script automatiza o processo de:
+1.1. Acessar um site (https://rpa.xidondzo.com/) usando Selenium WebDriver.
+1.2. Baixar arquivos .txt contendo informações de um usuário.
+1.3. Extrair dados específicos de cada arquivo de texto, como: Nome, E-mail, Contacto, Estado Civil, Salário Líquido
+1.4. Armazenar os dados extraídos em um arquivo CSV.
+1.4. Armazenar dados incompletos em um arquivo CSV separado para posterior revisão.
+
+2. Requisitos
+2.1. Selenium WebDriver: Usado para interagir com a página web e baixar arquivos.
+2.2. Webdriver Manager: Para gerenciar a instalação do ChromeDriver automaticamente.
+2.3. Python: Versão 3.x
+2.4. Módulos necessários:
+2.4.1. os: Manipulação de caminhos e diretórios.
+2.4.2. csv: Para escrever dados extraídos em arquivos CSV.
+2.4.3. time: Para controlar intervalos de tempo (ex: espera entre cliques).
+2.4.3. selenium.webdriver: Para controlar o navegador e interagir com a página.
+2.4.3. selenium.common.exceptions: Para capturar exceções de carregamento ou falha no WebDriver.
+
+3. Funcionamento do Código
+3.1. Configuração do WebDriver: O WebDriver é configurado para usar o ChromeDriver, que é gerenciado automaticamente pela biblioteca webdriver_manager.
+3.2. Acessando o site: O navegador acessa o site especificado. O script aguarda 5 segundos para garantir que a página tenha carregado completamente.
+3.3. Tratamento de Exceções: O script possui tratamento de exceções para erros comuns:
+3.3.1. TimeoutException: Quando a página leva mais tempo do que o esperado para carregar.
+3.3.2. WebDriverException: Erros gerais ao tentar acessar a página.
+3.3.3. Exception: Captura erros inesperados que podem ocorrer.
+3.4. Coletando links de botões de download: O script encontra todos os botões de download com a classe "btn btn-success" e o atributo download.
+3.5. Baixando Arquivos: O script clica em cada botão de download encontrado, aguardando 2 segundos entre os cliques para evitar sobrecarga no servidor.
+3.6. Definindo os Caminhos dos Arquivos: 
+3.6.1. O caminho de Downloads é determinado automaticamente com base no diretório do usuário (USERPROFILE).
+3.6.2. O caminho para os arquivos CSV de dados extraídos e erros também é definido, utilizando o diretório atual onde o script está sendo executado.
+3.7. Lendo os Arquivos e Processando Dados: O script lista todos os arquivos .txt no diretório de Downloads que começam com R (indicativo de que são arquivos relevantes).
+3.8. Extração de Dados dos Arquivos de Texto: Dentro de um loop que processa cada arquivo, O conteúdo de cada arquivo de texto é lido e as informações relevantes (nome, e-mail, etc.) são extraídas.
+3.9. Verificação de Dados Duplicados: Antes de adicionar os dados ao CSV, o script verifica se o nome e e-mail (como tupla) já foram cadastrados. Isso evita duplicação de registros.
+3.10. Armazenando Dados no CSV: Se todos os dados estiverem presentes, eles são armazenados no arquivo dados_extraidos.csv.
+3.11. Armazenando Dados Incompletos: Se algum dado estiver ausente, ele será registrado no arquivo dados_extraidos_informacao_falta.csv, Cada campo ausente é marcado como "Faltando".
+
+4. Considerações Finais
+4.1. Flexibilidade: O script é projetado para ser executado em diferentes diretórios de usuário, ajustando-se ao sistema operacional.
+4.2. Erros e Exceções: O tratamento de exceções ajuda a evitar falhas inesperadas durante a execução.
+4.3. CSV de Erros: Os dados incompletos são armazenados em um arquivo separado, permitindo correção manual ou revisão posterior.
+
+5. Possíveis Melhorias
+5.1. Adicionar mais validações de dados (ex: verificar se o e-mail tem o formato correto).
+5.2. Implementar a exclusão de arquivos após o processamento para evitar reprocessamento de dados antigos.
