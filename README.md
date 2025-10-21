@@ -25,11 +25,14 @@ Cada participante terá 2 horas para desenvolver sua solução e até 15 minutos
 
 Cada participante possui um diretório próprio neste repositório, nomeado com seu nome completo:
 
-DeveloperRPA/
-├── Marcos Feliciano Sate/
-├── Ramos Sambo/
-├── Jose Jaime/
-└── Edson Da Silva Dinis Maleiane/
+## 📁 Estrutura de Diretórios
+
+| Diretório                          | Participante                          |
+|-----------------------------------|---------------------------------------|
+| `DeveloperRPA/MarcosFelicianoSate/`       | Marcos Feliciano Sate                 |
+| `DeveloperRPA/RamosSambo/`                | Ramos Sambo                          |
+| `DeveloperRPA/Jose Jaime/`                 | Jose Jaime                           |
+| `DeveloperRPA/EdsonDaSilvaDinisMaleiane/` | Edson Da Silva Dinis Maleiane        |
 
 
 Cada pasta deve conter:
