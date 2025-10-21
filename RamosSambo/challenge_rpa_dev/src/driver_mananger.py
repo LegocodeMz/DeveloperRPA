@@ -1,19 +1,16 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-import os
 from config import Config
 
 def get_driver(headless=True, browser="chrome"):
     if browser.lower() == "chrome":
         options = ChromeOptions()
         if headless:
-            # use new headless mode
             options.add_argument("--headless=new")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
-        driver = webdriver.Chrome(options=options)
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-gpu")
         driver = webdriver.Chrome(options=options)
     else:
         options = FirefoxOptions()
@@ -22,5 +19,5 @@ def get_driver(headless=True, browser="chrome"):
         driver = webdriver.Firefox(options=options)
 
     driver.set_page_load_timeout(Config.TIMEOUT)
-    driver.implicitly_wait(1)  # short implicit; use explicit waits primarily
+    driver.implicitly_wait(1)
     return driver

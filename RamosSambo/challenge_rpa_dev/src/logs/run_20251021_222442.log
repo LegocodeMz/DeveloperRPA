@@ -1,0 +1,10 @@
+[2025-10-21 22:24:42,481] INFO rpa - === Início do processo de automação ===
+[2025-10-21 22:24:52,147] INFO rpa - Encontradas 5  linhas na tabela.
+[2025-10-21 22:24:52,290] INFO rpa - Processando url https://rpa.xidondzo.com/docs/R1000.txt
+[2025-10-21 22:24:53,915] INFO rpa - Processando url https://rpa.xidondzo.com/docs/R1001.txt
+[2025-10-21 22:24:55,397] INFO rpa - Processando url https://rpa.xidondzo.com/R1002.txt
+[2025-10-21 22:24:56,722] ERROR rpa - Erro de requisicao 404 ao baixar arquivo: https://rpa.xidondzo.com/R1002.txt
+[2025-10-21 22:24:56,804] INFO rpa - Processando url https://rpa.xidondzo.com/docs/R1003.txt
+[2025-10-21 22:24:58,355] INFO rpa - Processando url https://rpa.xidondzo.com/docs/R1004.txt
+[2025-10-21 22:24:59,750] INFO rpa - Dados salvos em ./output/report_20251021_222459.csv
+[2025-10-21 22:25:02,045] INFO rpa - === Navegador encerrado. ===
