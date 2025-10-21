@@ -1,11 +1,13 @@
 # RPA Automation - .NET Selenium
 
-![Logo do Projeto](/Screenshot 2025-10-21 235538.png)
+Balancete NedBank
+
+![Logo do Projeto](/JoseJaime/Screenshot%202025-10-21%20235538.png)
 
 ## Introdução
 
 
-> Este projeto é uma automação RPA desenvolvida em C# com Selenium, que acessa o website `rpa.xidondzo.com`, faz download de ficheiros de balancete salarial, extrai apenas os campos necessários (Nome, Email, Contacto, Estado Civil, Salário Líquido) e gera um CSV limpo e padronizado.
+> Este projeto é uma automação RPA desenvolvida em C# com Selenium, que acessa o website `rpa.xidondzo.com`, compila e faz download do excel Balancete salarial, `resumo 'salarial' dos cliente` extrai apenas os campos necessários (Nome, Email, Contacto, Estado Civil, Salário Líquido, Mes inicial) e gera um CSV com os demais dados para cada mes, e serve como `proposta inicial da disposicao dos componentes do documento sendo Nedbank o cliente final`.
 
 ---
 
@@ -48,10 +50,9 @@ NBK_RPA_CS/
 
 ## Como Executar
 
-1. Clone o projeto:
+1. Baixa o projeto, A pasta do projecto ou o zip:
 
 ```bash
-git clone https://github.com/thatgeekdev/NBK_RPA_CS.git
 cd NBK_RPA_CS
 ```
 
@@ -109,18 +110,6 @@ public string StartUrl { get; private set; } = "https://rpa.xidondzo.com/";
 ```csharp
 public string ExportsPath { get; private set; } = "Exports";
 ```
-
----
-
-## Captura de Tela / Imagem
-
-Você pode adicionar uma imagem explicativa ou screenshot do projeto executando aqui:
-
-```markdown
-![Descrição da Imagem](\Screenshot 2025-10-21 235538.png)
-```
-
----
 
 ## Autor
 
