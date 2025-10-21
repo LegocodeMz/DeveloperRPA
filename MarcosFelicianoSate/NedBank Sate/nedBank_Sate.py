@@ -52,15 +52,13 @@ with open(csv_path, mode='a', newline='', encoding='utf-8') as csvfile:
                 if "Contacto / Tel:" in linha:  
                     contacto = linha.split(":")[1].strip()  # Extrai o contacto
                 if "Estado Civil:" in linha:  
-                    estadoCivil = linha.split(":")[1].strip()  # Extrai o estado civil
-                if "Salário" in linha:  
-                    salario = linha.split(":")[1].strip()       
+                    estadoCivil = linha.split(":")[1].strip()     # Extrai o estado civil
+                if "Sal" in linha:  
+                    salario = linha.split(":")[1].strip()
                 
-
-
                 if nome and mail and contacto and estadoCivil:
-                    dados.append([nome, mail, contacto, estadoCivil])
-                    nome, mail, contacto, estadoCivil = None, None, None, None
+                    dados.append([nome, mail, contacto, estadoCivil, salario])
+                    nome, mail, contacto, estadoCivil, salario = None, None, None, None, None
 
 #writer.writerow(['Nome', 'E-mail', 'Contacto / Tel', 'Estado Civil']) 
 
