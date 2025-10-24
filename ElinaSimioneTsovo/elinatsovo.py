@@ -11,7 +11,6 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException,
 
 # ===================== CONFIGURAÇÕES =====================
 URL = "http://rpa.xidondzo.com"
-OUTPUT_FILE = "dados_j_output.csv"
 FILE_NAME = "R1000.txt"
 CAMPOS_OBRIGATORIOS = ["nome", "email", "contacto", "estado_civil", "salario_liquido"]
 
@@ -74,7 +73,7 @@ def executar_scraper():
 
         # ===================== BAIXAR FICHEIRO =====================
         print("[AÇÃO] Clicando para baixar o ficheiro...")
-        download_btn = driver.find_element(*LOCATORS["DOWNLOAD_LINK"])
+        download_btn = driver.find_element(By.LINK_TEXT, "aqui")
         download_btn.click()
 
         
