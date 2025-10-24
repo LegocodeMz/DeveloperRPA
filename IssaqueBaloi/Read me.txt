@@ -1,0 +1,52 @@
+Documentação de Instalação e Uso – Automação de Relatórios
+
+1. Requisitos
+* SO: Windows 10+ (Linux/macOS possíveis, ajustar caminhos)
+* Python: 3.8+
+* Browser: Google Chrome atualizado
+* Espaço livre: ?100 MB
+
+2. Instalação de Dependências
+pip install selenium webdriver-manager
+* selenium: Automação de browsers
+* webdriver-manager: Gerenciamento automático do ChromeDriver
+
+3. Configuração
+* Certificar que o Google Chrome está instalado
+* Downloads padrão na pasta do utilizador (Downloads)
+* ChromeDriver gerido automaticamente pelo webdriver-manager
+
+4. Estrutura e Funcionalidade do Script
+1. Acesso ao site: https://www.rpa.xidondzo.com
+2. Detecção e fecho de pop-ups (handle_popups)
+3. Download de GenericReport.txt
+4. Validação de formato .txt
+5. Extração de campos via Regex: Nome, Email, Contacto, Estado Civil, Salário Líquido
+6. Validação de dados: emails, contactos, salários
+7. Transformação de dados: normalização de nomes, emails, contactos e salários
+8. Geração de CSV (Relatorio_Filtrado.csv) com UTF-8 BOM e separador ;
+
+
+5. Execução
+python extrair_relatorio.py
+* O script abre o browser, faz download do ficheiro, processa os dados e gera o CSV.
+* CSV final localizado em: C:\Users\<Seu_Utilizador>\Downloads\Relatorio_Filtrado.csv
+
+6. Observações
+* Pop-ups não fecháveis automaticamente: intervenção manual requerida (pressionar Enter)
+* O ficheiro de download deve ser GenericReport.txt
+* CSV final:
+Nome;Email;Contacto;Estado Civil;Salário Líquido (MZN)
+
+7. Decisões Técnicas
+* Python 3.8+: Linguagem de alto nível, legível, com suporte amplo a bibliotecas de automação e manipulação de dados. Facilita testes e manutenção.
+* Selenium + WebDriver Manager: Automatiza acesso ao site, interação com elementos dinâmicos e download. O WebDriver Manager elimina incompatibilidades com o ChromeDriver.
+* Função handle_popups(): Detecta e fecha pop-ups automaticamente ou solicita intervenção manual, garantindo robustez.
+* Regex para extração de dados: Flexível para identificar campos no .txt, mesmo com pequenas variações de formato.
+* Validação e transformação de dados: Garante consistência e compatibilidade com Excel. Nomes capitalizados, emails em minúsculas, contactos limpos e salários formatados corretamente.
+* CSV UTF-8 BOM + separador ;: Evita problemas de acentuação e compatível com sistemas que usam vírgula como separador decimal.
+* Estrutura modular: Cada função é independente (ler_e_extrair_campos, validar_dados, transformar_dados, gerar_csv), facilitando manutenção e futuras expansões.
+* Segurança e confiabilidade: Automação apenas em páginas públicas, pausas (time.sleep) garantem carregamento correto de elementos, e validação de dados reduz erros no relatório final.
+
+
+
