@@ -31,8 +31,12 @@ Cada participante possui um diretório próprio neste repositório, nomeado com 
 |-----------------------------------|---------------------------------------|
 | `DeveloperRPA/MarcosFelicianoSate/`       | Marcos Feliciano Sate                 |
 | `DeveloperRPA/RamosSambo/`                | Ramos Sambo                          |
-| `DeveloperRPA/Jose Jaime/`                 | Jose Jaime                           |
+| `DeveloperRPA/JoseJaime/`                 | Jose Jaime                           |
 | `DeveloperRPA/EdsonDaSilvaDinisMaleiane/` | Edson Da Silva Dinis Maleiane        |
+| `DeveloperRPA/MiroPedroTipaneque/` | Miro Pedro Tipaneque        |
+| `DeveloperRPA/ElinaSimioneTsovo/` | Elina Simione Tsovo        |
+| `DeveloperRPA/EltonGuambe/` | Elton Guambe        |
+| `DeveloperRPA/IssaqueBaloi/` | Issaque Baloi        |
 
 
 Cada pasta deve conter:
