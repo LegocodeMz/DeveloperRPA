@@ -18,7 +18,7 @@ RPA solution in C# with Selenium WebDriver to extract salary data from https://r
 
 ##  Quick Start
 
-- download challendge.zip
+- download challenge.zip
 - extract
 ```bash
 cd NedbankRpa
@@ -108,6 +108,7 @@ dotnet test --verbosity detailed
 **Developed for**: Nedbank RPA Challenge  
 **Pattern**: Page Object Model  
 **License**: Challenge-specific use only
+
 
 
 
