@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "dgSpecHash": "FmH+Puur+TjW/uNhBnQhchABcoEyhodS0ajFIHqK3GFWP98yDd1gDtCdwAioashBDOLURIFqSwEmy3DPQX3lyw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mirop\\Desktop\\challenge\\nedbankrpa\\NedbankRpa.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mirop\\.nuget\\packages\\dotnetseleniumextras.waithelpers\\3.11.0\\dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.applicationinsights\\2.23.0\\microsoft.applicationinsights.2.23.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.extensions.dependencymodel\\8.0.2\\microsoft.extensions.dependencymodel.8.0.2.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testing.extensions.telemetry\\2.0.1\\microsoft.testing.extensions.telemetry.2.0.1.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testing.extensions.trxreport.abstractions\\2.0.1\\microsoft.testing.extensions.trxreport.abstractions.2.0.1.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testing.extensions.vstestbridge\\2.0.1\\microsoft.testing.extensions.vstestbridge.2.0.1.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testing.platform\\2.0.1\\microsoft.testing.platform.2.0.1.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testing.platform.msbuild\\2.0.1\\microsoft.testing.platform.msbuild.2.0.1.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testplatform.adapterutilities\\18.0.0\\microsoft.testplatform.adapterutilities.18.0.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\microsoft.testplatform.objectmodel\\18.0.0\\microsoft.testplatform.objectmodel.18.0.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\nunit\\3.13.3\\nunit.3.13.3.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\nunit3testadapter\\6.0.0-beta.1\\nunit3testadapter.6.0.0-beta.1.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\selenium.support\\4.37.0\\selenium.support.4.37.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\selenium.webdriver\\4.37.0\\selenium.webdriver.4.37.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\system.collections.immutable\\8.0.0\\system.collections.immutable.8.0.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.0\\system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
+    "C:\\Users\\mirop\\.nuget\\packages\\system.reflection.metadata\\8.0.0\\system.reflection.metadata.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

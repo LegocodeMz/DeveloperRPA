@@ -1,63 +1,76 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.Generic;
 
 namespace NedbankRpa.Pages
 {
-    public class BalancetePage
+    /*
+     * JUSTIFICATION: Primary constructor syntax (C# 12)
+     * - Concise dependency injection pattern
+     * - IWebDriver injected from caller
+     * - Creates private readonly field automatically
+     * - Reduces boilerplate code
+     */
+    public class BalanceSheetPage(IWebDriver driver)
     {
-        private IWebDriver driver;
-        private WebDriverWait wait;
+        private readonly IWebDriver driver = driver;
 
-        public BalancetePage(IWebDriver driver)
-        {
-            this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        }
+        /*
+         * JUSTIFICATION: WebDriverWait with 10-second timeout
+         * - Enables smart waiting (polls until condition met)
+         * - Created once, reused for multiple wait operations
+         */
+        private readonly WebDriverWait wait = new(driver, TimeSpan.FromSeconds(10));
 
-        public void Navegar(string url)
+        public void NavigateTo(string url)
         {
             driver.Navigate().GoToUrl(url);
             driver.Manage().Window.Maximize();
-            Console.WriteLine($"Navegando para: {url}");
+            Console.WriteLine($"Navigating to: {url}");
         }
 
-        public List<string> BaixarArquivos(string downloadPath)
+/*
+         * JUSTIFICATION: DownloadFiles method returns List<string>
+         * - Returns list of successfully downloaded filenames
+         * - Allows caller to verify which files were downloaded
+         * - Useful for validation or reporting
+         */
+        public List<string> DownloadFiles(string downloadPath)
         {
-            var arquivosBaixados = new List<string>();
-            var botoes = driver.FindElements(By.CssSelector("table tbody tr a.btn.btn-success"));
-            int contador = 1;
+            var downloadedFiles = new List<string>();
 
-            foreach (var botao in botoes)
+            // a.btn.btn-success: Anchor tags with green download button styling
+            var buttons = driver.FindElements(By.CssSelector("table tbody tr a.btn.btn-success"));
+            int counter = 1;
+
+            foreach (var button in buttons)
             {
-                string fileName = botao.GetAttribute("download") ?? $"Anexo_{contador}.txt";
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", botao);
+                string fileName = button.GetAttribute("download") ?? $"Anexo_{counter}.txt";
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", button);
 
                 try
                 {
-                    wait.Until(ExpectedConditions.ElementToBeClickable(botao));
-                    botao.Click();
+                    wait.Until(ExpectedConditions.ElementToBeClickable(button));
+                    button.Click();
 
-                    if (Utils.FileHelper.AguardarDownload(downloadPath, fileName))
+                    if (Utils.FileHelper.WaitDownload(downloadPath, fileName))
                     {
-                        Console.WriteLine($"Arquivo baixado: {fileName}");
-                        arquivosBaixados.Add(fileName);
+                        Console.WriteLine($"File downloaded: {fileName}");
+                        downloadedFiles.Add(fileName);
                     }
                     else
                     {
-                        Console.WriteLine($"Arquivo não disponível: {fileName}");
+                        Console.WriteLine($"File unavailable: {fileName}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Erro ao baixar '{fileName}': {ex.Message}");
+                    Console.WriteLine($"Error while downloading '{fileName}': {ex.Message}");
                 }
-                contador++;
+                counter++;
             }
 
-            return arquivosBaixados;
+            return downloadedFiles;
         }
     }
 }
