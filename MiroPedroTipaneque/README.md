@@ -82,7 +82,7 @@ dotnet test --verbosity detailed
 
 ##  Key Technologies
 
-- **C# / .NET 6.0** - Core language and framework
+- **C# / .NET 8.0** - Core language and framework
 - **Selenium WebDriver** - Browser automation
 - **Page Object Model** - Design pattern for maintainability
 - **xUnit** - Testing framework
@@ -108,4 +108,5 @@ dotnet test --verbosity detailed
 **Developed for**: Nedbank RPA Challenge  
 **Pattern**: Page Object Model  
 **License**: Challenge-specific use only
+
 
