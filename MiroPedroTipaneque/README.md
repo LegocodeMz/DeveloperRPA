@@ -80,8 +80,6 @@ dotnet test
 dotnet test --verbosity detailed
 ```
 
-**Test Coverage**: 18 tests covering FileHelper, ReportService, and BalanceSheetPage
-
 ##  Key Technologies
 
 - **C# / .NET 6.0** - Core language and framework
@@ -110,3 +108,4 @@ dotnet test --verbosity detailed
 **Developed for**: Nedbank RPA Challenge  
 **Pattern**: Page Object Model  
 **License**: Challenge-specific use only
+
