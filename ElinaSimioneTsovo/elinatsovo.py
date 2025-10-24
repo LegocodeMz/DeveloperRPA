@@ -1,154 +1,189 @@
-import os
+#!/usr/bin/env python3
+# rpa_scraper_filtrado.py
+"""
+Scraper RPA com logs em console e arquivo:
+ - Baixa todos os ficheiros .txt da página
+ - Extrai campos: nome, email, contacto, estado civil, salario liquido
+ - Salva CSV na mesma pasta do script
+ - Regista logs no console e em arquivo rpa_scraper.log
+"""
+
+import re
 import time
 import csv
+import logging
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
 
-# ===================== CONFIGURAÇÕES =====================
+# ========== CONFIGURACÕES ==========
 URL = "http://rpa.xidondzo.com"
-FILE_NAME = "R1000.txt"
-CAMPOS_OBRIGATORIOS = ["nome", "email", "contacto", "estado_civil", "salario_liquido"]
+DOWNLOAD_DIR = Path.cwd()
+OUTPUT_CSV = DOWNLOAD_DIR / "R1000_filtrado.csv"
+LOG_FILE = DOWNLOAD_DIR / "rpa_scraper.log"
+TIMEOUT = 60
 
-LOCATORS = {
-    "DOWNLOAD_LINK": (By.CSS_SELECTOR, "a.btn-success[href$='.txt']"),
-    "FILE_TYPE_HINT": (By.TAG_NAME, "body")
+
+FIELD_PATTERNS = {
+    "nome": r"Nome[:\s]*([^\n]+)",
+    "contacto": r"Contacto\s*/\s*Tel[:\s]*([\d\-\+\s]+)",
+    "email": r"E-?mail[:\s]*([\w\.-]+@[\w\.-]+)",
+    "estado_civil": r"Estado Civil[:\s]*([A-Za-zÀ-ÿ]+)",
+    "salario_liquido": r"Sal[aá]rio\s+L[ií]quido[:\s]*([0-9\.,]+)",
 }
 
+# ========== LOGS ==========
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_FILE, encoding='utf-8'),
+        logging.StreamHandler()
+    ]
+)
 
+# ========== FUNÇÕES ==========
+def normalize_number(text: str) -> str:
+    """Converte '16.050,00' -> '16050.00'"""
+    if not text:
+        return ""
+    t = text.strip().replace(" ", "").replace(".", "").replace(",", ".")
+    return t
 
-# ===================== FUNÇÃO PRINCIPAL =====================
-def executar_scraper():
-    print("INÍCIO DO SCRAPER")
-    driver = None
-    
-    try:
-                
-        # ===================== DEFININDO O DOWNLOAD =====================
-        download_path = os.path.abspath(os.path.dirname(__file__))
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        prefs = {"download.default_directory": download_path}
+def wait_for_file(path: Path, timeout: int = TIMEOUT) -> bool:
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        if path.exists() and path.stat().st_size > 0:
+            size1 = path.stat().st_size
+            time.sleep(0.5)
+            size2 = path.stat().st_size
+            if size1 == size2:
+                return True
+        time.sleep(0.5)
+    return False
 
-        # ===================== INICIANDO O CHROME =====================
+def find_downloaded_txt(download_dir: Path):
+    files = [p for p in download_dir.iterdir() if p.is_file() and p.suffix == ".txt"]
+    return max(files, key=lambda p: p.stat().st_mtime) if files else None
 
-        options.add_experimental_option("prefs", prefs)
-        print("Inicializando o Chrome Driver...")
-        service = Service(ChromeDriverManager().install())
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        driver = webdriver.Chrome(service=service, options=options)
-        driver.implicitly_wait(15)
-        wait = WebDriverWait(driver, 10)
-
+def extrair_registros(texto: str):
+    blocos = re.split(r"---\s*Registro:?", texto, flags=re.IGNORECASE)
+    registros = []
+    for bloco in blocos:
+        bloco = bloco.strip()
+        if not bloco:
+            continue
+        reg = {}
+        for campo, patt in FIELD_PATTERNS.items():
+            try:
+                m = re.search(patt, bloco, flags=re.IGNORECASE | re.MULTILINE)
+                valor = m.group(1).strip() if m else ""
+                if campo == "salario_liquido":
+                    valor = normalize_number(valor)
+                reg[campo] = valor
+            except Exception as e:
+                logging.error(f"Erro ao extrair campo {campo}: {e}")
+                reg[campo] = ""
         
-        print(f"[ACESSO] Navegando para {URL}")
-        driver.get(URL)
-        print("[SUCESSO] Página carregada.")
-
-
-
-
-        # ===================== IDENTIFICAR O TIPO PELO HINT =====================
-        hint_element = driver.find_element(*LOCATORS["FILE_TYPE_HINT"])
-        hint_text = hint_element.text.lower()
-        print(f"[HINT] Texto encontrado na página: '{hint_text}'")
-
-        if 'csv' in hint_text:
-            tipo_identificado = "CSV (Identificado por Texto)"
-        elif 'txt' in hint_text:
-            tipo_identificado = "TXT (Identificado por Texto)"
-        elif 'json' in hint_text:
-            tipo_identificado = "JSON (Identificado por Texto)"
+        if reg.get("email") and reg.get("contacto"):
+            registros.append(reg)
         else:
-            tipo_identificado = f"Hint genérico: {hint_text}"
+            logging.warning(f"Registro ignorado por falta de email ou contacto: {reg.get('nome','<sem nome>')}")
+    return registros
 
-        print(f"[INFO] Tipo provável: {tipo_identificado}")
-
-
-
-        # ===================== BAIXAR FICHEIRO =====================
-        print("[AÇÃO] Clicando para baixar o ficheiro...")
-        download_btn = driver.find_element(By.LINK_TEXT, "aqui")
-        download_btn.click()
-
-        
-        download_path = os.path.abspath(os.path.dirname(__file__))
-        caminho = os.path.join(download_path, FILE_NAME)
-        time.sleep(5)  
-
-        if not os.path.exists(caminho):
-            print(f"\n[FALHA] Ficheiro '{FILE_NAME}' não encontrado após o clique.")
-            return False
-
-        print(f"\n[SUCESSO] Ficheiro '{FILE_NAME}' descarregado em:\n{download_path}")
-
-        # ===================== IDENTIFICAR FORMATO =====================
-        tipo = "Desconhecido"
-        if FILE_NAME.lower().endswith('.txt') or 'txt' in hint_text:
-            tipo = "TXT"
-        elif FILE_NAME.lower().endswith('.csv') or 'csv' in hint_text:
-            tipo = "CSV"
-        print(f"[INFO] Formato final identificado: {tipo}")
-
-
-
-        # ===================== LER E EXTRAIR DADOS =====================
-        if tipo == "TXT":
-            dados_filtrados = []
-            with open(caminho, "r", encoding="utf-8") as f:
-                for linha in f:
-                    linha = linha.strip()
-                    if not linha:
-                        continue
-                    
-                    if ',' in linha:
-                        colunas = linha.split(',')
-                    else:
-                        colunas = linha.split('\t')
-
-                   
-                    registro = {}
-                    for item in colunas:
-                        if ':' in item:
-                            chave, valor = item.split(':', 1)
-                            chave = chave.strip().lower()
-                            valor = valor.strip()
-                            if chave in CAMPOS_OBRIGATORIOS:
-                                registro[chave] = valor
-                    if registro:
-                        dados_filtrados.append(registro)
-
-            # ===================== SALVAR CSV =====================
-            if dados_filtrados:
-                with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as f:
-                    writer = csv.DictWriter(f, fieldnames=CAMPOS_OBRIGATORIOS)
-                    writer.writeheader()
-                    for registro in dados_filtrados:
-                        
-                        linha = {campo: registro.get(campo, "") for campo in CAMPOS_OBRIGATORIOS}
-                        writer.writerow(linha)
-                print(f"[SUCESSO] Dados filtrados salvos em {OUTPUT_FILE}")
-            else:
-                print("[AVISO] Nenhum dado válido encontrado no ficheiro.")
-
-    except WebDriverException as e:
-        print(f"\n[ERRO CRÍTICO DRIVER] {e}")
-    except NoSuchElementException as e:
-        print(f"\n[ERRO FATAL LOCALIZADOR] {e}")
-    except TimeoutException:
-        print("\n[ERRO TEMPO] Timeout.")
+def salvar_csv(dados, caminho):
+    if not dados:
+        logging.warning("Nenhum dado para salvar.")
+        return
+    fieldnames = list(FIELD_PATTERNS.keys())
+    try:
+        with caminho.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            for item in dados:
+                writer.writerow({k: item.get(k, "") for k in fieldnames})
+        logging.info(f"CSV salvo: {caminho}")
     except Exception as e:
-        print(f"\n[ERRO GERAL] {e}")
+        logging.error(f"Erro ao salvar CSV: {e}")
+
+# ========== NAVEGANDO NO CHOME ==========
+def setup_chrome(download_dir: Path):
+    try:
+        options = webdriver.ChromeOptions()
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        prefs = {
+            "download.default_directory": str(download_dir.resolve()),
+            "download.prompt_for_download": False,
+            "safebrowsing.enabled": True,
+        }
+        options.add_experimental_option("prefs", prefs)
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)
+        driver.implicitly_wait(10)
+        logging.info("ChromeDriver iniciado com sucesso.")
+        return driver
+    except WebDriverException as e:
+        logging.error(f"Erro ao iniciar ChromeDriver: {e}")
+        raise
+
+def baixar_txt(driver, url: str, download_dir: Path):
+    try:
+        driver.get(url)
+        time.sleep(2)
+        anchors = driver.find_elements(By.TAG_NAME, "a")
+        links_txt = [a for a in anchors if (a.get_attribute("href") or "").lower().endswith(".txt")]
+        ficheiros = []
+        for link in links_txt:
+            href = link.get_attribute("href")
+            logging.info(f"A descarregar: {href}")
+            driver.execute_script("arguments[0].click();", link)
+            end_time = time.time() + TIMEOUT
+            while time.time() < end_time:
+                cand = find_downloaded_txt(download_dir)
+                if cand and wait_for_file(cand, timeout=5) and cand not in ficheiros:
+                    ficheiros.append(cand)
+                    break
+                time.sleep(1)
+        return ficheiros
+    except Exception as e:
+        logging.error(f"Erro ao baixar ficheiros: {e}")
+        return []
+
+# ========== FLUXO PRINCIPAL ==========
+def main():
+    driver = None
+    try:
+        driver = setup_chrome(DOWNLOAD_DIR)
+        ficheiros_txt = baixar_txt(driver, URL, DOWNLOAD_DIR)
+        if not ficheiros_txt:
+            logging.warning("Nenhum ficheiro baixado.")
+            return
+
+        todos = []
+        for f in ficheiros_txt:
+            try:
+                texto = f.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                try:
+                    texto = f.read_text(encoding="latin-1", errors="ignore")
+                except Exception as e:
+                    logging.error(f"Erro ao ler ficheiro {f.name}: {e}")
+                    continue
+            registros = extrair_registros(texto)
+            todos.extend(registros)
+
+        salvar_csv(todos, OUTPUT_CSV)
+        logging.info(f"Total de registros extraídos: {len(todos)}")
+    except Exception as e:
+        logging.error(f"Erro no fluxo principal: {e}")
     finally:
         if driver:
             driver.quit()
-            print("[FIM] Driver encerrado.")
+            logging.info("ChromeDriver fechado.")
 
-# ===================== EXECUTANDO O RPA =====================
 if __name__ == "__main__":
-    executar_scraper()
+    main()
