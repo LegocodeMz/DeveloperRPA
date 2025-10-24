@@ -1,4 +1,4 @@
-# Nedbank RPA - Balance Sheet Automation
+# Nedbank RPA - Balance Sheet Automation with C#
 
 RPA solution in C# with Selenium WebDriver to extract salary data from https://rpa.xidondzo.com and generate consolidated reports.
 
@@ -18,8 +18,8 @@ RPA solution in C# with Selenium WebDriver to extract salary data from https://r
 
 ##  Quick Start
 
-download challendge.zip
-extract
+- download challendge.zip
+- extract
 ```bash
 cd NedbankRpa
 
@@ -108,5 +108,6 @@ dotnet test --verbosity detailed
 **Developed for**: Nedbank RPA Challenge  
 **Pattern**: Page Object Model  
 **License**: Challenge-specific use only
+
 
 
