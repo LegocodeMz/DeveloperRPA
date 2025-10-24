@@ -1,0 +1,99 @@
+--- Registro: R-1000 ---
+Nome: Carla Nhantumbo
+Contacto / Tel: 84-123-456
+E-mail: c.nhantumbo@empresa.mz
+Estado Civil: Solteira
+Documento: BI 456789 AA
+Dept.: Recursos Humanos
+Período: Jan/2025
+Vencimentos brutos: MZN 18.250,00
+Bónus: MZN 1.500,00
+Seguros: MZN 4.200,00
+OUTROS: Transporte: MZN 500,00
+Salário Líquido: 16.050,00 MZN
+Pagamento via: Transferência bancária
+Referência recibo: RCB-001/2025
+Obs.: Verificar cálculo de bónus.
+Assinatura gestor: Ernesto Mucavele
+Data: 2025/02/08
+--- END Registro: R-1000 ---
+
+--- Registro: R-1001 ---
+Nome: Tomás Cossa
+Contacto / Tel: 86-987-321
+E-mail: t.cossa@empresa.mz
+Estado Civil: Casado
+Documento: BI 987654 BB
+Dept.: Financeiro
+Período: Jan/2025
+Vencimentos brutos: MZN 22.000,00
+Bónus: MZN 2.000,00
+Seguros: MZN 5.500,00
+OUTROS: Alimentação: MZN 800,00
+Salário Líquido: 19.300,00 MZN
+Pagamento via: Cheque
+Referência recibo: RCB-002/2025
+Obs.: Confirmar valor de alimentação.
+Assinatura gestor: Lídia Matavele
+Data: 2025/02/08
+--- END Registro: R-1001 ---
+
+--- Registro: R-1002 ---
+Nome: Elsa Mucave
+Contacto / Tel: 85-456-789
+E-mail: e.mucave@empresa.mz
+Estado Civil: Divorciada
+Documento: BI 123456 CC
+Dept.: Jurídico
+Período: Jan/2025
+Vencimentos brutos: MZN 19.800,00
+Bónus: MZN 0
+Seguros: MZN 3.900,00
+OUTROS: N/D
+Salário Líquido: 15.900,00 MZN
+Pagamento via: Depósito em numerário
+Referência recibo: RCB-003/2025
+Obs.: Sem bónus este mês.
+Assinatura gestor: Mauro Chissano
+Data: 2025/02/08
+--- END Registro: R-1002 ---
+
+--- Registro: R-1003 ---
+Nome: Inês Mabunda
+Contacto / Tel: 87-321-654
+E-mail: i.mabunda@empresa.mz
+Estado Civil: Casada
+Documento: BI 654321 DD
+Dept.: Marketing
+Período: Jan/2025
+Vencimentos brutos: MZN 16.500,00
+Bónus: MZN 1.200,00
+Seguros: MZN 3.300,00
+OUTROS: Internet: MZN 300,00
+Salário Líquido: 14.700,00 MZN
+Pagamento via: Transferência bancária
+Referência recibo: RCB-004/2025
+Obs.: Internet incluída como benefício.
+Assinatura gestor: Celso Mbanze
+Data: 2025/02/08
+--- END Registro: R-1003 ---
+
+--- Registro: R-1004 ---
+Nome: Júlio Matusse
+Contacto / Tel: 83-789-123
+E-mail: j.matusse@empresa.mz
+Estado Civil: Viúvo
+Documento: BI 321987 EE
+Dept.: Logística
+Período: Jan/2025
+Vencimentos brutos: MZN 14.750,00
+Bónus: MZN 500,00
+Seguros: MZN 2.950,00
+OUTROS: N/D
+Salário Líquido: 12.300,00 MZN
+Pagamento via: Cheque
+Referência recibo: RCB-005/2025
+Obs.: Bónus reduzido por faltas.
+Assinatura gestor: Sandra Ussene
+Data: 2025/02/08
+--- END Registro: R-1004 ---
