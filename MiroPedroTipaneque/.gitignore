@@ -1,0 +1,47 @@
+#   Build / Publish
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+
+#   Visual Studio Code
+.vscode/
+.history/
+*.code-workspace
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+#   Usuário / Temporários
+
+*.user
+*.userosscache
+*.suo
+*.tmp
+*.temp
+
+#   Logs e cache
+logs/
+*.log
+*.svclog
+TestResults/
+*.coverage
+*.coveragexml
+
+#   Backup & Config Local
+*.bak
+*.swp
+*.env
+secrets.json
+
+
+#   Pacotes (rede baixados via restore)
+packages/
+*.nupkg
+
